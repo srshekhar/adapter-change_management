@@ -66,6 +66,9 @@ class ServiceNowAdapter extends EventEmitter {
       password: this.props.auth.password,
       serviceNowTable: this.props.serviceNowTable
     });
+    log.info('this.connector.url'+this.connector.url);
+    log.info('this.connector.username'+this.connector.username);
+    log.info('this.connector.password'+this.connector.password);
   }
 
   /**
@@ -94,13 +97,17 @@ class ServiceNowAdapter extends EventEmitter {
  *   that handles the response.
  */
 healthcheck(callback) {
- this.getRecord((result, error) => {
+     let callbackData = null;
+  let callbackError = null;
+
+ this.getRecord( (result, error) => {
    /**
     * For this lab, complete the if else conditional
     * statements that check if an error exists
     * or the instance was hibernating. You must write
     * the blocks for each branch.
     */
+
    if (error) {
        callbackError=error;
      /**
@@ -137,7 +144,6 @@ healthcheck(callback) {
    //return callback(callbackData, callbackError);
  });
 }
-
   /**
    * @memberof ServiceNowAdapter
    * @method emitOffline
@@ -202,6 +208,7 @@ healthcheck(callback) {
     //console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
      return callback(callbackData, callbackError);
   });
+  
   }
 
   /**
@@ -220,7 +227,6 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-
      let callbackData = null;
   let callbackError = null;
     this.connector.post(this.connector.serviceNowTable, (data, error) => {
@@ -233,6 +239,7 @@ healthcheck(callback) {
      return callback(callbackData, callbackError);
   });
   }
+
 }
 
 module.exports = ServiceNowAdapter;
